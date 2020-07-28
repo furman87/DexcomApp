@@ -1,0 +1,19 @@
+﻿@page
+@model DexcomApp.Pages.Dexcom.ConnectModel
+@{
+    ViewData["Title"] = "Connect Dexcom";
+}
+
+<h3>Connect Dexcom</h3>
+
+@if (Model.DexcomToken == null)
+{
+    <p>In order to use this website, you must authorize it with Dexcom. None of your Dexcom account information is visible to this site.</p>
+    <a class="btn btn-primary" asp-page-handler="ConnectDexcom" role="button">Connect</a>
+}
+else
+{
+    <p>You have already authorized this website with Dexcom.</p>
+    <a class="btn btn-primary" asp-page="/Dexcom/Egvs" role="button">Get CGM Data</a>
+}
+

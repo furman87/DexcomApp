@@ -1,0 +1,20 @@
+﻿@page
+@model DexcomApp.Pages.Dexcom.CompleteModel
+@{
+    ViewData["Title"] = "Dexcom Connect";
+}
+
+<h2>Dexcom Connect</h2>
+
+@if (string.IsNullOrWhiteSpace(Model.Token.AccessToken))
+{
+    <h3>Error</h3>
+    <p>There was a problem connecting to Dexcom, please try again later.</p>
+}
+else
+{
+    <h3>Success</h3>
+    <p>You have successfully authorized this application with your Dexcom account.</p>
+    <a class="btn btn-primary" href="/Dexcom/Egvs?accessToken=@Model.Token.AccessToken" role="button">Get CGM Data</a>
+}
+

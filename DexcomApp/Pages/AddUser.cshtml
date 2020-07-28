@@ -1,0 +1,14 @@
+﻿@page
+@model DexcomApp.Pages.AddUserModel
+@{
+    ViewData["Title"] = "Add User";
+}
+
+<h1>Add User</h1>
+
+<input type="text" asp-for="User.Street" placeholder="Street Address" />
+<input type="text" asp-for="User.City" placeholder="City" />
+<input type="text" asp-for="User.State" placeholder="State" />
+<input type="text" asp-for="User.ZipCode" placeholder="Zip Code" />
+
+<button type="submit">Save</button>

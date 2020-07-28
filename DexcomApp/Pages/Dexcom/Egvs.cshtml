@@ -1,0 +1,29 @@
+﻿@page
+@model DexcomApp.Pages.Dexcom.EgvsModel
+@{
+    ViewData["Title"] = "Egvs";
+}
+
+<h1>Egvs</h1>
+
+<div class="table-responsive-md">
+    <table class="table table-striped table-hover table-sm">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Time</th>
+                <th scope="col">Value</th>
+                <th scope="col">Trend</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reading in Model.EgvList.Egvs)
+            {
+                <tr class="@Model.TrendClass(reading.Trend)">
+                    <td>@reading.SystemTime</td>
+                    <td>@reading.Value</td>
+                    <td>@reading.Trend</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
