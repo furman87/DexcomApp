@@ -1,4 +1,8 @@
-﻿namespace DexcomApp.Providers
+﻿// <copyright file="UserDataProvider.cs" company="Ken Watson">
+// Copyright (c) Ken Watson. All rights reserved.
+// </copyright>
+
+namespace DexcomApp.Providers
 {
     using System;
     using System.Collections.Generic;

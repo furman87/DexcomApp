@@ -1,4 +1,8 @@
-﻿namespace DexcomApp.Models
+﻿// <copyright file="DexcomToken.cs" company="Ken Watson">
+// Copyright (c) Ken Watson. All rights reserved.
+// </copyright>
+
+namespace DexcomApp.Models
 {
     using System;
     using System.Collections.Generic;

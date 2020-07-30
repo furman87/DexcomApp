@@ -1,3 +1,7 @@
+// <copyright file="Startup.cs" company="Ken Watson">
+// Copyright (c) Ken Watson. All rights reserved.
+// </copyright>
+
 namespace DexcomApp
 {
     using Microsoft.AspNetCore.Builder;

@@ -15,6 +15,6 @@ else
 {
     <h3>Success</h3>
     <p>You have successfully authorized this application with your Dexcom account.</p>
-    <a class="btn btn-primary" href="/Dexcom/Egvs?accessToken=@Model.Token.AccessToken" role="button">Get CGM Data</a>
+    <a class="btn btn-primary" asp-page="/Dexcom/Egvs" role="button">Get CGM Data</a>
 }
 

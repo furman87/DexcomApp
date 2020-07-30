@@ -1,4 +1,8 @@
-﻿namespace DexcomApp.Code
+﻿// <copyright file="GenericExtensions.cs" company="Ken Watson">
+// Copyright (c) Ken Watson. All rights reserved.
+// </copyright>
+
+namespace DexcomApp.Code
 {
     using System;
     using System.Collections.Generic;

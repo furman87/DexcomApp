@@ -1,8 +1,14 @@
-﻿namespace DexcomApp.Pages.Dexcom
+﻿// <copyright file="Egvs.cshtml.cs" company="Ken Watson">
+// Copyright (c) Ken Watson. All rights reserved.
+// </copyright>
+
+namespace DexcomApp.Pages.Dexcom
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
     using DexcomApp.Code;
     using DexcomApp.Models;
@@ -15,11 +21,13 @@
     {
         private IConfiguration configuration;
         private ApiAccess apiAccess;
+        private string cookieName;
 
         public EgvsModel(IConfiguration configuration)
         {
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             this.apiAccess = new ApiAccess(this.configuration["CLIENT_ID"], this.configuration["CLIENT_SECRET"], this.configuration);
+            this.cookieName = this.configuration.GetValue<bool>("IsSandbox") ? this.configuration["SandboxCookieName"] : this.configuration["CookieName"];
         }
 
         public EgvList EgvList { get; set; }
@@ -30,24 +38,26 @@
 
         public async Task<IActionResult> OnGet()
         {
-            var cookieName = this.configuration["CookieName"];
-            this.Token = this.Request.GetCookie<DexcomToken>(cookieName);
+            this.Token = this.Request.GetCookie<DexcomToken>(this.cookieName);
             if (this.Token == null)
             {
                 return this.Redirect(this.apiAccess.OauthUri);
             }
 
-            var json = await this.apiAccess.GetEgvs(this.Token.AccessToken).ConfigureAwait(false);
-            if (json.Contains("InvalidAccessToken", StringComparison.InvariantCultureIgnoreCase))
+            var response = await this.apiAccess.GetEgvs(this.Token.AccessToken).ConfigureAwait(false);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                var newToken = await this.apiAccess.RefreshAccessTokenAsync(this.Token).ConfigureAwait(false);
-                this.Response.SaveCookie<DexcomToken>(cookieName, newToken);
+                var newToken = await this.apiAccess.GetAccessTokenAsync(this.Token.RefreshToken, true).ConfigureAwait(false);
+                this.Response.SaveCookie<DexcomToken>(this.cookieName, newToken);
                 this.Token = newToken;
-                json = await this.apiAccess.GetEgvs(this.Token.AccessToken).ConfigureAwait(false);
+                response = await this.apiAccess.GetEgvs(this.Token.AccessToken).ConfigureAwait(false);
             }
 
-            this.EgvJson = json;
+            var json = response.Content;
             this.EgvList = json.ToObject<EgvList>();
+            var dateTimeFormat = this.configuration["DateTimeQueryFormat"];
+            var dataPoints = this.EgvList.Egvs.Select(e => new { x = e.DisplayTime.ToString(dateTimeFormat, CultureInfo.InvariantCulture), y = e.Value });
+            this.EgvJson = dataPoints.ToJson();
             return this.Page();
         }
 

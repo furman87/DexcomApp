@@ -1,9 +1,31 @@
 ﻿@page
 @model DexcomApp.Pages.Dexcom.DataRangeModel
 @{
-    ViewData["Title"] = "DataRange";
+    ViewData["Title"] = "Data Ranges";
 }
 
-<h1>DataRange</h1>
+<h3>Data Ranges</h3>
 
-<p>@Model.DataRangeJson</p>
+<div id="ranges">
+    <table class="table table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Description</th>
+                <th scope="col">System Time</th>
+                <th scope="col">Display Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>EGV Start Date</td>
+                <td>@Model.DataRange.Egvs.Start.SystemTime</td>
+                <td>@Model.DataRange.Egvs.Start.DisplayTime</td>
+            </tr>
+            <tr>
+                <td>EGV End Date</td>
+                <td>@Model.DataRange.Egvs.End.SystemTime</td>
+                <td>@Model.DataRange.Egvs.End.DisplayTime</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

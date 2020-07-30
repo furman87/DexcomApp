@@ -1,4 +1,8 @@
-﻿namespace DexcomApp.Models
+﻿// <copyright file="User.cs" company="Ken Watson">
+// Copyright (c) Ken Watson. All rights reserved.
+// </copyright>
+
+namespace DexcomApp.Models
 {
     public class User
     {

@@ -1,3 +1,7 @@
+// <copyright file="Error.cshtml.cs" company="Ken Watson">
+// Copyright (c) Ken Watson. All rights reserved.
+// </copyright>
+
 namespace DexcomApp.Pages
 {
     using System.Diagnostics;

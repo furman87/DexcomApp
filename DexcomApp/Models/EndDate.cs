@@ -1,4 +1,4 @@
-﻿// <copyright file="DataRange.cs" company="Ken Watson">
+﻿// <copyright file="EndDate.cs" company="Ken Watson">
 // Copyright (c) Ken Watson. All rights reserved.
 // </copyright>
 
@@ -9,12 +9,10 @@ namespace DexcomApp.Models
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class DataRange
+    public class EndDate
     {
-        public Calibrations Calibrations { get; set; }
+        public DateTime SystemTime { get; set; }
 
-        public Egvs Egvs { get; set; }
-
-        public object Events { get; set; }
+        public DateTime DisplayTime { get; set; }
     }
 }

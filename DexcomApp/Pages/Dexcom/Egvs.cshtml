@@ -4,13 +4,23 @@
     ViewData["Title"] = "Egvs";
 }
 
-<h1>Egvs</h1>
+<h2>CGM Data</h2>
+
+@if (Model.EgvList.Egvs.Count > 0)
+{
+    <div id="latest-reading">@Model.EgvList.Egvs.First().Value</div>
+}
+
+<div id="chart-container">
+    <canvas id="chart"></canvas>
+</div>
 
 <div class="table-responsive-md">
     <table class="table table-striped table-hover table-sm">
         <thead class="thead-light">
             <tr>
-                <th scope="col">Time</th>
+                <th scope="col">System Time</th>
+                <th scope="col">Display Time</th>
                 <th scope="col">Value</th>
                 <th scope="col">Trend</th>
             </tr>
@@ -18,12 +28,68 @@
         <tbody>
             @foreach (var reading in Model.EgvList.Egvs)
             {
-                <tr class="@Model.TrendClass(reading.Trend)">
-                    <td>@reading.SystemTime</td>
-                    <td>@reading.Value</td>
-                    <td>@reading.Trend</td>
-                </tr>
+            <tr class="@Model.TrendClass(reading.Trend)">
+                <td>@reading.SystemTime</td>
+                <td>@reading.DisplayTime</td>
+                <td>@reading.Value</td>
+                <td>@reading.Trend</td>
+            </tr>
             }
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script>
+    var ctx = $('#chart');
+    var lineColor = 'rgb(255, 99, 132)';
+    var config = {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'CGM Data',
+                backgroundColor: lineColor,
+                borderColor: lineColor,
+                fill: false,
+                data: @Html.Raw(Model.EgvJson)
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: false,
+                text: 'Chart.js Time Point Data'
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
+                    },
+                    ticks: {
+                        major: {
+                            fontStyle: 'bold',
+                            fontColor: '#FF0000'
+                        }
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'BG'
+                    },
+                    ticks: {
+                        max: 400,
+                        min: 40
+                    }
+                }]
+            }
+        }
+    }
+
+    var bgChart = new Chart(ctx, config);
+</script>

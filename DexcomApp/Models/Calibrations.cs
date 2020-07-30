@@ -9,12 +9,10 @@ namespace DexcomApp.Models
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class DataRange
+    public class Calibrations
     {
-        public Calibrations Calibrations { get; set; }
+        public StartDate Start { get; set; }
 
-        public Egvs Egvs { get; set; }
-
-        public object Events { get; set; }
+        public EndDate End { get; set; }
     }
 }
