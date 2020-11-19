@@ -31,7 +31,8 @@ namespace DexcomApp.Pages.Dexcom
 
         ~DataRangeModel()
         {
-            this.Dispose(false); // Not calling from Dispose, so it's *not* safe
+            // Not calling from Dispose, so it's not safe.
+            this.Dispose(false);
         }
 
         public DataRange DataRange { get; set; }

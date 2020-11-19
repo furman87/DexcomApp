@@ -11,9 +11,20 @@ namespace DexcomApp.Models
 
     public class Egv
     {
-        public DateTime SystemTime { get; set; }
+        private DateTime systemTime;
+        private DateTime displayTime;
 
-        public DateTime DisplayTime { get; set; }
+        public DateTime SystemTime
+        {
+            get => this.systemTime; // TimeZoneInfo.ConvertTimeToUtc(this.systemTime);
+            set => this.systemTime = value;
+        }
+
+        public DateTime DisplayTime
+        {
+            get => this.displayTime; // TimeZoneInfo.ConvertTimeToUtc(this.displayTime);
+            set => this.displayTime = value;
+        }
 
         public int Value { get; set; }
 

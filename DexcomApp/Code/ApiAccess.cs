@@ -88,17 +88,17 @@ namespace DexcomApp.Code
                 endDate = DateTime.UtcNow.AddSeconds(this.configuration.GetValue<int>("TimeAdjustmentSeconds"));
             }
 
-            if (startDate == default(DateTime))
+            if (startDate == default(DateTime) || (startDate > endDate))
             {
-                startDate = endDate.AddSeconds(this.configuration.GetValue<int>("DefaultEgvPeriodSeconds"));
+                startDate = endDate.AddHours(this.configuration.GetValue<int>("DefaultEgvPeriodHours"));
             }
 
             var dateFormat = this.configuration["DateTimeQueryFormat"];
-            var uri = $"v2/users/self/egvs?startDate={startDate.ToString(dateFormat, CultureInfo.InvariantCulture)}&endDate={endDate.ToString(dateFormat, CultureInfo.InvariantCulture)}";
+            var uri = $"v2/users/self/egvs?startDate={startDate.ToString(dateFormat)}&endDate={endDate.ToString(dateFormat)}";
 
             using var request = new HttpRequestMessage(HttpMethod.Get, uri);
             request.Headers.Add("cache-control", "no-cache");
-            request.Headers.Add("authorization", "Bearer " + accessToken);
+            request.Headers.Add("authorization", $"Bearer {accessToken}");
 
             return new ApiResponse(await this.client.SendAsync(request).ConfigureAwait(false));
         }
